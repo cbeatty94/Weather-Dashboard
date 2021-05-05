@@ -9,14 +9,15 @@
     <title>Weather Dashboard</title>
 </head>
 <body>
-    <div class='container'>
-        <h1 class='display-2 text-center'>Weather Dashboard</h1>
-    </div>
+    <nav class="navbar navbar-dark bg-primary">
+        <h1 class='display-2'>Weather Dashboard</h1>
+    </nav>
     <div class='container'>
         <div class='row'>
-            <div class="col input-group mb-3">
-                <input id="search-input" class="form-input w-100 rounded" type="text" placeholder="Search for a City">
-                <button class="btn btn-info btn-block w-100 rounded">Search</button>
+            <div class="col input-group mb-3 gap-2">
+                <p class='display-6 text-center'>Search for a City:</p>
+                <input id="search-input" class="p-2 form-input w-100 rounded" type="text" placeholder="Search for a City">
+                <button class="p-2 btn btn-info btn-block w-100 rounded">Search</button>
             </div>
             <div class='col-9 border border-info'>
                 <h4 id='searchResults' class='display-6 text-center'>Search Results</h4>
