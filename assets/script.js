@@ -6,6 +6,7 @@ var cityWind = document.getElementById('Wind')
 var cityHumidity = document.getElementById('Humidity')
 var cityUV = document.getElementById('UVindex')
 var searchBtn = document.getElementById('searchBtn')
+var currentPic = document.getElementById('currentPic')
 
 
 function cityWeather() {
@@ -18,16 +19,19 @@ function cityWeather() {
       .then(function (data) {
         console.log(data);
         var city = data.city.name
+        var cityDate = data.list[0].dt_txt
+        var weatherIcon = 'https://openweathermap.org/img/wn/' + data.list[0].weather[0].icon + '@2x.png'
         var temp = data.list[0].main.temp
         var windSpeed = data.list[0].wind.speed
         var humidity = data.list[0].main.humidity
 
-        cityName.textContent = city
+        cityName.textContent = city + ' ' + cityDate 
+        currentPic.src = weatherIcon
         cityTemp.textContent = 'Temperature: F ' + temp
         cityWind.textContent = 'Wind Speed: ' + windSpeed + ' mph'
         cityHumidity.textContent = 'Humidity: ' + humidity + '%'
 
-         
+        // + ('http://openweathermap.org/img/wn/' + weatherIcon + '@2x.png') 
       });
     
     
