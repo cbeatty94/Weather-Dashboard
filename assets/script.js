@@ -7,7 +7,5 @@ var CityHumidity = document.getElementById('Humidity')
 var CityUV = document.getElementById('UVindex')
 
 
-function cityWeather(resultObj) {
-    console.log(resultObj);
-}
+function cityWeather()
 
