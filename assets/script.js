@@ -10,15 +10,26 @@ var searchBtn = document.getElementById('searchBtn')
 
 function cityWeather() {
     var searchInput = document.getElementById('searchInput').value
-    console.log(searchInput)
-
-    fetch('http://api.openweathermap.org/data/2.5/forecast?q=' + searchInput + '&appid=' + APIkey)
+   
+    fetch('http://api.openweathermap.org/data/2.5/forecast?q=' + searchInput + '&appid=' + APIkey + '&units=imperial')
     .then(function (response) {
         return response.json();
       })
       .then(function (data) {
         console.log(data);
+        var city = data.city.name
+        var temp = data.list[0].main.temp
+        var windSpeed = data.list[0].wind.speed
+        var humidity = data.list[0].main.humidity
+
+        cityName.textContent = city
+        cityTemp.textContent = 'Temperature: F ' + temp
+        cityWind.textContent = 'Wind Speed: ' + windSpeed + ' mph'
+        cityHumidity.textContent = 'Humidity: ' + humidity + '%'
+
+         
       });
+    
     
 
 }
