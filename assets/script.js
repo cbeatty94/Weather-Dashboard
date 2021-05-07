@@ -45,6 +45,7 @@ function fiveDayForecast() {
   })
   .then(function (data) {
     console.log(data);
+    $('#forecastList').empty();
     for (let index = 4; index < 40; index+=8) { 
       var cityContainer = document.createElement('div')
       var cityDateContainer = document.createElement('p')
@@ -59,9 +60,7 @@ function fiveDayForecast() {
       tempContainer.textContent = 'Temperature: F ' 
       windSpeedContainer.textContent = 'Wind Speed: '
       humidityContainer.textContent = 'Humidity: '
-      cityDateContainer
-      // var city = data.city.name
-      // cityContainer.append(city)
+    
       var cityDate = data.list[index].dt_txt
       cityDateContainer.append(cityDate)
     // append a class to icon to use css
@@ -80,7 +79,6 @@ function fiveDayForecast() {
 
       forecastList.append(cityContainer)
 
-  //       // make a loop starting at 4th index that increments by 8 each round
       }
 
   })
