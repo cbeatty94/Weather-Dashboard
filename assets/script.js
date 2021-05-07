@@ -70,11 +70,6 @@ function fiveDayForecast() {
       var weatherIcon = 'https://openweathermap.org/img/wn/' + data.list[index].weather[0].icon + '.png'
       weatherIconContainer.src = weatherIcon
 
-    // append a class to icon to use css
-    // var weatherIcon = 'https://openweathermap.org/img/wn/' + data.list[index].weather[index].icon + '@2x.png'
-      // var city = data.city.name
-      // cityDateContainer.append(city)
-
       var temp = data.list[index].main.temp
       tempContainer.append(temp)
       
@@ -93,19 +88,3 @@ function fiveDayForecast() {
   $('#previousSearch').prepend(`<button class="btn btn-secondary col mb-2 searchBtn">${lastCity}</button>`)
 
 }
-
-// renderLastCity()
-
-// function renderLastCity(){
-//   var lastCity = localStorage.getItem('previous city');
-//   var previousSearch = document.getElementById('previousSearch');
-
-//   previousSearch.textContent = lastCity;
-
-// }
-
-
-
-// $('#searchBtn').on('click',function(event){})
-
-// api.openweathermap.org/data/2.5/forecast?q=wilmington&appid=c3af6e45795e59cae1dc9209a98b58e5
