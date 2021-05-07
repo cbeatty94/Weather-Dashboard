@@ -52,6 +52,8 @@ function fiveDayForecast() {
       var windSpeedContainer = document.createElement('p')
       var humidityContainer = document.createElement('p')
 
+      cityContainer.classList.add('card')
+
       cityContainer.append(cityDateContainer, tempContainer, windSpeedContainer, humidityContainer)
 
       tempContainer.textContent = 'Temperature: F ' 
