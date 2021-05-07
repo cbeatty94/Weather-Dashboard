@@ -14,7 +14,7 @@ var currentDate = moment().format('MM/DD/YYYY')
 function cityWeather() {
     var searchInput = document.getElementById('searchInput').value
    
-    fetch('http://api.openweathermap.org/data/2.5/weather?q=' + searchInput + '&appid=' + APIkey + '&units=imperial')
+    fetch('https://api.openweathermap.org/data/2.5/weather?q=' + searchInput + '&appid=' + APIkey + '&units=imperial')
     .then(function (response) {
         return response.json();
       })
@@ -39,7 +39,7 @@ function cityWeather() {
 function fiveDayForecast() {
   var searchInput = document.getElementById('searchInput').value
 
-  fetch('http://api.openweathermap.org/data/2.5/forecast?q=' + searchInput + '&appid=' + APIkey + '&units=imperial')
+  fetch('https://api.openweathermap.org/data/2.5/forecast?q=' + searchInput + '&appid=' + APIkey + '&units=imperial')
   .then(function (response) {
     return response.json();
   })
@@ -86,17 +86,22 @@ function fiveDayForecast() {
   })
 
 }
-    renderLastCity()
 
-function renderLastCity(){
-  var lastCity = localStorage.getItem('previous city');
-  var previousSearch = document.getElementById('previousSearch');
+// renderLastCity()
 
-  previousSearch.textContent = lastCity;
+// function renderLastCity(){
+//   var lastCity = localStorage.getItem('previous city');
+//   var previousSearch = document.getElementById('previousSearch');
 
-}
+//   previousSearch.textContent = lastCity;
+
+// }
 
 searchBtn.addEventListener('click', cityWeather)
 searchBtn.addEventListener('click', fiveDayForecast)
+$('#searchBtn').on('click',function(event){
+  var lastCity = localStorage.getItem('previous city')
+  $('#previousSearch').prepend(`<button class="btn btn-secondary col mb-2 searchBtn">${lastCity}</button>`)
+})
 
 // api.openweathermap.org/data/2.5/forecast?q=wilmington&appid=c3af6e45795e59cae1dc9209a98b58e5
