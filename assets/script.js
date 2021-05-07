@@ -10,6 +10,8 @@ var searchBtn = document.getElementById('searchBtn')
 var currentPic = document.getElementById('currentPic')
 var currentDate = moment().format('MM/DD/YYYY')
 
+searchBtn.addEventListener('click', cityWeather)
+searchBtn.addEventListener('click', fiveDayForecast)
 
 function cityWeather() {
     var searchInput = document.getElementById('searchInput').value
@@ -49,13 +51,14 @@ function fiveDayForecast() {
     for (let index = 4; index < 40; index+=8) { 
       var cityContainer = document.createElement('div')
       var cityDateContainer = document.createElement('p')
+      var weatherIconContainer = document.createElement('img')
       var tempContainer = document.createElement('p')
       var windSpeedContainer = document.createElement('p')
       var humidityContainer = document.createElement('p')
 
       cityContainer.classList.add('card')
 
-      cityContainer.append(cityDateContainer, tempContainer, windSpeedContainer, humidityContainer)
+      cityContainer.append(cityDateContainer, weatherIconContainer, tempContainer, windSpeedContainer, humidityContainer)
 
       tempContainer.textContent = 'Temperature: F ' 
       windSpeedContainer.textContent = 'Wind Speed: '
@@ -63,6 +66,10 @@ function fiveDayForecast() {
     
       var cityDate = data.list[index].dt_txt
       cityDateContainer.append(cityDate)
+
+      var weatherIcon = 'https://openweathermap.org/img/wn/' + data.list[index].weather[0].icon + '.png'
+      weatherIconContainer.src = weatherIcon
+
     // append a class to icon to use css
     // var weatherIcon = 'https://openweathermap.org/img/wn/' + data.list[index].weather[index].icon + '@2x.png'
       // var city = data.city.name
@@ -82,6 +89,8 @@ function fiveDayForecast() {
       }
 
   })
+  var lastCity = localStorage.getItem('previous city')
+  $('#previousSearch').prepend(`<button class="btn btn-secondary col mb-2 searchBtn">${lastCity}</button>`)
 
 }
 
@@ -95,14 +104,8 @@ function fiveDayForecast() {
 
 // }
 
-searchBtn.addEventListener('click', cityWeather)
-searchBtn.addEventListener('click', fiveDayForecast)
-$('#searchBtn').on('click',function(event){
-  var lastCity = localStorage.getItem('previous city')
-  $('#previousSearch').prepend(`<button class="btn btn-secondary col mb-2 searchBtn">${lastCity}</button>`)
-})
 
-var previousSearch = document.getElementById('previousSearch').value
-previousSearch
+
+// $('#searchBtn').on('click',function(event){})
 
 // api.openweathermap.org/data/2.5/forecast?q=wilmington&appid=c3af6e45795e59cae1dc9209a98b58e5
