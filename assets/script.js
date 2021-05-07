@@ -102,4 +102,7 @@ $('#searchBtn').on('click',function(event){
   $('#previousSearch').prepend(`<button class="btn btn-secondary col mb-2 searchBtn">${lastCity}</button>`)
 })
 
+var previousSearch = document.getElementById('previousSearch').value
+previousSearch
+
 // api.openweathermap.org/data/2.5/forecast?q=wilmington&appid=c3af6e45795e59cae1dc9209a98b58e5
