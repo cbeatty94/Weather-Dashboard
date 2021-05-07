@@ -41,9 +41,9 @@ function fiveDayForecast() {
 
   fetch('http://api.openweathermap.org/data/2.5/forecast?q=' + searchInput + '&appid=' + APIkey + '&units=imperial')
   .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
+    return response.json();
+  })
+  .then(function (data) {
     console.log(data);
     for (let index = 4; index < 40; index+=8) { 
       var cityContainer = document.createElement('div')
@@ -60,10 +60,13 @@ function fiveDayForecast() {
       cityDateContainer
       // var city = data.city.name
       // cityContainer.append(city)
-      // var cityDate = data.list[index].dt_txt
-      // cityDateContainer.append(cityDate)
+      var cityDate = data.list[index].dt_txt
+      cityDateContainer.append(cityDate)
     // append a class to icon to use css
     // var weatherIcon = 'https://openweathermap.org/img/wn/' + data.list[index].weather[index].icon + '@2x.png'
+      // var city = data.city.name
+      // cityDateContainer.append(city)
+
       var temp = data.list[index].main.temp
       tempContainer.append(temp)
       
