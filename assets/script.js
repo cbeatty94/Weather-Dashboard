@@ -8,53 +8,90 @@ var cityHumidity = document.getElementById('Humidity')
 var cityUV = document.getElementById('UVindex')
 var searchBtn = document.getElementById('searchBtn')
 var currentPic = document.getElementById('currentPic')
+var currentDate = moment().format('MM/DD/YYYY')
 
 
 function cityWeather() {
     var searchInput = document.getElementById('searchInput').value
    
-    fetch('http://api.openweathermap.org/data/2.5/forecast?q=' + searchInput + '&appid=' + APIkey + '&units=imperial')
+    fetch('http://api.openweathermap.org/data/2.5/weather?q=' + searchInput + '&appid=' + APIkey + '&units=imperial')
     .then(function (response) {
         return response.json();
       })
       .then(function (data) {
         console.log(data);
-        var city = data.city.name
-        var cityDate = data.list[4].dt_txt
-        // append a class to icon to use css
-        var weatherIcon = 'https://openweathermap.org/img/wn/' + data.list[0].weather[0].icon + '@2x.png'
-        var temp = data.list[0].main.temp
-        var windSpeed = data.list[0].wind.speed
-        var humidity = data.list[0].main.humidity
-
-        cityName.textContent = city + ' ' + cityDate 
+        var city = data.name
+        var weatherIcon = 'https://openweathermap.org/img/wn/' + data.weather[0].icon + '.png'
+        var temp = data.main.temp
+        var windSpeed = data.wind.speed
+        var humidity = data.main.humidity
+        
+        cityName.textContent = city + ' ' + currentDate
         currentPic.src = weatherIcon
         cityTemp.textContent = 'Temperature: F ' + temp
         cityWind.textContent = 'Wind Speed: ' + windSpeed + ' mph'
         cityHumidity.textContent = 'Humidity: ' + humidity + '%'
-
-        for (let index = 4; index < 40; index+=8) { 
-          var cityContainer = document.createElement('div')
-          var city = data.city.name
-          cityContainer.append(city)
-          var cityDate = data.list[index].dt_txt
-        // append a class to icon to use css
-        // var weatherIcon = 'https://openweathermap.org/img/wn/' + data.list[index].weather[index].icon + '@2x.png'
-          var temp = data.list[index].main.temp
-          var windSpeed = data.list[index].wind.speed
-          var humidity = data.list[index].main.humidity
-
-          forecastList.append(cityContainer)
-
-          // make a loop starting at 4th index that increments by 8 each round
-        }
-        // + ('http://openweathermap.org/img/wn/' + weatherIcon + '@2x.png') 
       });
-    
-    
+      localStorage.setItem('previous city', searchInput)
+      
+    }
+
+function fiveDayForecast() {
+  var searchInput = document.getElementById('searchInput').value
+
+  fetch('http://api.openweathermap.org/data/2.5/forecast?q=' + searchInput + '&appid=' + APIkey + '&units=imperial')
+  .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+    console.log(data);
+    for (let index = 4; index < 40; index+=8) { 
+      var cityContainer = document.createElement('div')
+      var cityDateContainer = document.createElement('p')
+      var tempContainer = document.createElement('p')
+      var windSpeedContainer = document.createElement('p')
+      var humidityContainer = document.createElement('p')
+
+      cityContainer.append(cityDateContainer, tempContainer, windSpeedContainer, humidityContainer)
+
+      tempContainer.textContent = 'Temperature: F ' 
+      windSpeedContainer.textContent = 'Wind Speed: '
+      humidityContainer.textContent = 'Humidity: '
+      cityDateContainer
+      // var city = data.city.name
+      // cityContainer.append(city)
+      // var cityDate = data.list[index].dt_txt
+      // cityDateContainer.append(cityDate)
+    // append a class to icon to use css
+    // var weatherIcon = 'https://openweathermap.org/img/wn/' + data.list[index].weather[index].icon + '@2x.png'
+      var temp = data.list[index].main.temp
+      tempContainer.append(temp)
+      
+      var windSpeed = data.list[index].wind.speed
+      windSpeedContainer.append(windSpeed)
+
+      var humidity = data.list[index].main.humidity
+      humidityContainer.append(humidity)
+
+      forecastList.append(cityContainer)
+
+  //       // make a loop starting at 4th index that increments by 8 each round
+      }
+
+  })
+
+}
+    renderLastCity()
+
+function renderLastCity(){
+  var lastCity = localStorage.getItem('previous city');
+  var previousSearch = document.getElementById('previousSearch');
+
+  previousSearch.textContent = lastCity;
 
 }
 
 searchBtn.addEventListener('click', cityWeather)
+searchBtn.addEventListener('click', fiveDayForecast)
 
 // api.openweathermap.org/data/2.5/forecast?q=wilmington&appid=c3af6e45795e59cae1dc9209a98b58e5
