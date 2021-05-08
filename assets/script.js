@@ -11,10 +11,21 @@ var currentPic = document.getElementById('currentPic')
 var currentDate = moment().format('MM/DD/YYYY')
 
 searchBtn.addEventListener('click', cityWeather)
-searchBtn.addEventListener('click', fiveDayForecast)
+// searchBtn.addEventListener('click', fiveDayForecast)
+
+
+// var localStorageArray = localStorage.getItem('previous city')
+// console.log(localStorageArray)
+// if (localStorageArray != null) {
+//   $('#previousSearch').prepend(`<button class="btn btn-secondary col mb-2 searchBtn">${lastCity}</button>`)
+// }
 
 function cityWeather() {
     var searchInput = document.getElementById('searchInput').value
+    if (searchInput.length < 1) {
+      searchInput = $(this).value
+      console.log(searchInput, 'searchInput')
+    }
    
     fetch('https://api.openweathermap.org/data/2.5/weather?q=' + searchInput + '&appid=' + APIkey + '&units=imperial')
     .then(function (response) {
@@ -35,7 +46,7 @@ function cityWeather() {
         cityHumidity.textContent = 'Humidity: ' + humidity + '%'
       });
       localStorage.setItem('previous city', searchInput)
-      
+      fiveDayForecast();
     }
 
 function fiveDayForecast() {
@@ -84,7 +95,17 @@ function fiveDayForecast() {
       }
 
   })
+  
   var lastCity = localStorage.getItem('previous city')
-  $('#previousSearch').prepend(`<button class="btn btn-secondary col mb-2 searchBtn">${lastCity}</button>`)
+  $('#previousSearch').prepend(`<button value=${lastCity} class="btn btn-secondary col mb-2 searchBtn previousBtn">${lastCity}</button>`)
+  
+  // var previousSearchBtn = document.getElementsByClassName('previousBtn')
+  // previousSearchBtn.addEventListener('click', cityWeather)
 
+  document.querySelectorAll('.previousBtn').forEach(item => {
+    item.addEventListener('click', cityWeather)
+  })
 }
+
+var lastCity = localStorage.getItem('previous city')
+  $('#previousSearch').prepend(`<button value=${lastCity} class="btn btn-secondary col mb-2 searchBtn previousBtn">${lastCity}</button>`)
